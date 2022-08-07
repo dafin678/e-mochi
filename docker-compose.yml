@@ -6,7 +6,7 @@ services:
     image: postgres:12.8
     restart: always
     environment:
-      - POSTGRES_USER=dafin
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=dafin
       - POSTGRES_DB=crud
     ports:

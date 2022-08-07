@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"gorm.io/driver/postgres"
-
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
@@ -35,15 +33,7 @@ type DBConfig struct {
 func (server *Server) Initialize(appConfig AppConfig, dbConfig DBConfig) {
 	fmt.Println("Welcome To " + appConfig.AppName)
 
-	var err error
-
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", dbConfig.DBHost, dbConfig.DBUser, dbConfig.DBPassword, dbConfig.DBName, dbConfig.DBPort)
-	server.DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic("Failed on connecting to database server")
-	}
-
-	server.Router = mux.NewRouter()
+	server.initializeDatabase(dbConfig)
 	server.initializeRoutes()
 }
 
